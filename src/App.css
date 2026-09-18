@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Boldonse&family=Parisienne&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Boldonse&family=Parisienne&family=Style+Script&display=swap');
 
 
 :root {
@@ -7,26 +7,93 @@
   --font-bolder: 'Boldonse', sans-serif;
   --font-normal: 'Barlow Condensed', sans-serif;
   --font-cursive: 'Parisienne', sans-serif;
+  --font-script: 'Style Script', sans-serif;
 }
 
-*{
+* {
   padding: 0;
   margin: 0;
   box-sizing: border-box;
 }
 
 
-@media (min-width: 1200px) and (max-width: 1439px){
-
+@media (min-width: 1200px) and (max-width: 1439px) {
+  .hero-content {
+    padding: 0 40px;
+  }
 }
 
 /* 2. MINI DESKTOPS & LANDSCAPE TABLETS (Together) */
-@media (min-width: 992px) and (max-width: 1199px){
+@media (min-width: 992px) and (max-width: 1199px) {
+  .hero-content {
+    padding: 0 30px;
+  }
 
+  .text-not-just {
+    font-size: 4rem;
+  }
+
+  .text-entertainment {
+    font-size: 3.5rem;
+  }
+
+  .text-cursive {
+    font-size: 3.5rem;
+  }
+
+  .text-experience {
+    font-size: 2.5rem;
+  }
+
+  .text-never-forget {
+    font-size: 2.5rem;
+  }
+
+  .hero-person-img {
+    width: 400px;
+  }
 }
 
 /* 3. PORTRAIT TABLETS (Separate) */
-@media (min-width: 577px) and (max-width: 991px){
+@media (min-width: 577px) and (max-width: 991px) {
+  .hero-content {
+    flex-direction: column;
+    padding: 0 20px;
+    gap: 40px;
+  }
+
+  .hero-text-container {
+    padding-right: 0;
+  }
+
+  .text-not-just {
+    font-size: 4rem;
+  }
+
+  .text-entertainment {
+    font-size: 3.5rem;
+  }
+
+  .text-cursive {
+    font-size: 3.5rem;
+  }
+
+  .text-experience {
+    font-size: 2.5rem;
+  }
+
+  .text-never-forget {
+    font-size: 2.5rem;
+  }
+
+  .hero-person-img {
+    width: 350px;
+  }
+
+  .hero-vertical-line {
+    display: none;
+  }
+
   .navbar-header {
     padding: 12px 0 12px 0;
   }
@@ -67,7 +134,68 @@
 }
 
 /*  4. MOBILE (Separate) */
-@media (max-width: 576px){
+@media (max-width: 576px) {
+  .hero-section {
+    padding-top: 100px;
+    padding-bottom: 0px;
+    /* Removes padding so image touches the bottom */
+  }
+
+  .hero-content {
+    flex-direction: column;
+    padding: 0 15px;
+    gap: 20px;
+  }
+
+  .hero-text-container {
+    padding-right: 0;
+  }
+
+  .text-not-just {
+    font-size: 40px !important;
+    margin-left: 22px !important;
+
+  }
+
+  .text-entertainment {
+    font-size: 40px !important;
+    line-height: 1.7 !important;
+    margin-left: 22px !important;
+  }
+
+  .text-cursive {
+    font-size: 95px !important;
+    margin-right: 0 !important;
+    margin-top: -10px !important;
+    margin-bottom: -5px !important;
+  }
+
+  .text-experience {
+    font-size: 34px !important;
+  }
+
+  .text-never-forget {
+    font-size: 34px !important;
+  }
+
+  .hero-enquire-btn {
+    font-size: 24px !important;
+    padding: 12px 24px !important;
+  }
+
+  .hero-person-img {
+    width: 360px !important;
+    margin-bottom: -145px !important;
+  }
+
+  .hero-vertical-line {
+    display: none;
+  }
+
+  .hero-slant-bottom {
+    height: 70px;
+  }
+
   .navbar-header {
     padding: 10px 0 10px 0;
   }
@@ -133,5 +261,9 @@
 
   .mobile-phone-link {
     font-size: 20px;
+  }
+
+  .hero-subtitle-container {
+    margin-top: -5px !important;
   }
 }
