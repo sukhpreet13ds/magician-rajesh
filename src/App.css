@@ -181,6 +181,7 @@
   .hero-enquire-btn {
     font-size: 24px !important;
     padding: 12px 24px !important;
+    margin-left: 12px;
   }
 
   .hero-person-img {
