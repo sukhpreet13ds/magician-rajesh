@@ -165,7 +165,160 @@
     left: 0;
     width: 100%;
     height: 15vw;
-    background: #f4f4f4;
+    background: #f0f0ec;
     clip-path: polygon(0 100%, 100% 0, 100% 100%);
     z-index: 3;
+}
+
+/* ===== PERFORMER SECTION ===== */
+.performer-section {
+    background: #f0f0ec;
+    width: 100%;
+    padding: 60px 20px 70px;
+    position: relative;
+    overflow: hidden;
+}
+
+/* Left side cutout person image positioned independently on the left */
+.performer-person-wrap {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    z-index: 10;
+    pointer-events: none;
+}
+
+.performer-person-img {
+    width: 320px;
+    max-width: 25vw;
+    height: auto;
+    display: block;
+    object-fit: contain;
+    object-position: bottom left;
+    filter: drop-shadow(4px 4px 15px rgba(0,0,0,0.15));
+}
+
+.performer-inner {
+    display: flex;
+    flex-direction: column;
+    max-width: 1100px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 2;
+}
+
+/* Header styling */
+.performer-header {
+    width: 100%;
+    margin-bottom: 35px;
+    text-align: center;
+}
+
+.performer-italic-tag {
+    font-family: var(--font-cursive);
+    font-size: 60px;
+    color: #334B43;
+    margin-bottom: 10px;
+    letter-spacing: 0.5px;
+    display: block;
+    text-align: center;
+}
+
+.performer-heading {
+    font-family: var(--font-bolder);
+    font-size: 44px;
+    font-weight: 900;
+    color: #050505;
+    line-height: 1.1;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin: 0;
+    text-align: center;
+}
+
+/* Content Layout (Stage & Text) */
+.performer-content-grid {
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    gap: 16px;
+    width: 100%;
+}
+
+.performer-stage-column {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex: 0 0 auto;
+}
+
+.performer-stage-wrap {
+    background: #ffffff;
+    padding: 10px;
+    border-radius: 2px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+}
+
+.performer-stage-img {
+    width: 560px;
+    max-width: 100%;
+    height: auto;
+    display: block;
+}
+
+/* Right Bio Text */
+.performer-text {
+    flex: 1;
+    max-width: 460px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    padding-top: 5px;
+}
+
+.performer-bio {
+    font-family: var(--font-normal);
+    font-size: 25px;
+    color: #000000;
+    line-height: 1.5;
+    margin-bottom: 0px;
+    letter-spacing: 0.1px;
+}
+
+.performer-quote {
+    font-family: var(--font-normal);
+    font-size: 22px;
+    color: #000000;
+    font-style: italic;
+    font-weight: 700;
+    margin-top: 10px;
+    line-height: 1.4;
+}
+
+/* Button row centered under stage image */
+.performer-btn-row {
+    margin-top: 25px;
+    display: flex;
+    justify-content: center;
+    width: 100%;
+}
+
+.performer-book-btn {
+    font-family: var(--font-normal);
+    font-size: 24px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: #111111;
+    background: #E5BA5A;
+    border: none;
+    padding: 14px 45px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.performer-book-btn:hover {
+    background: #d4a747;
+    transform: translateY(-2px);
 }

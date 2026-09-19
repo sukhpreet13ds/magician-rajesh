@@ -3,6 +3,8 @@ import './style/style.css';
 import backWall from '../assets/back-wall.jpg';
 import heroBg from '../assets/hero-bg.png';
 import magicianRajesh from '../assets/magician-rajesh.png';
+import igtStage from '../assets/igt-stage.png';
+import rajeshSide from '../assets/rajesh-side.png';
 import { TextAnimate } from '../components/magicui/text-animate';
 import { motion } from 'framer-motion';
 
@@ -62,6 +64,46 @@ const Home = () => {
                 </div>
                 <div className="hero-vertical-line"></div>
                 <div className="hero-slant-bottom"></div>
+            </section>
+
+            {/* ===== PERFORMER SECTION ===== */}
+            <section className="performer-section">
+                {/* Person standing image placed on the far left */}
+                <div className="performer-person-wrap">
+                    <img src={rajeshSide} alt="Rajesh Kumar" className="performer-person-img" />
+                </div>
+
+                <div className="performer-inner">
+                    {/* Header: Title & Subheading */}
+                    <div className="performer-header">
+                        <p className="performer-italic-tag">The Performer</p>
+                        <h2 className="performer-heading">MAGIC BUILT AROUND YOUR AUDIENCE.</h2>
+                    </div>
+
+                    {/* Main content grid: Center Stage Image + Right Text */}
+                    <div className="performer-content-grid">
+                        <div className="performer-stage-column">
+                            <div className="performer-stage-wrap">
+                                <img src={igtStage} alt="India's Got Talent Stage" className="performer-stage-img" />
+                            </div>
+                            <div className="performer-btn-row">
+                                <button className="performer-book-btn">BOOK RAJESH</button>
+                            </div>
+                        </div>
+
+                        <div className="performer-text">
+                            <p className="performer-bio">
+                                From a breakthrough on India's Magic Star to appearances on India's Got Talent and Hunarbaaz: Desh Ki Shaan, Rajesh Kumar has spent over sixteen years turning audiences into part of the story.
+                            </p>
+                            <p className="performer-bio">
+                                Every show is alive, interactive and flexible: close-up astonishment among guests, a high-energy stage act, or pure mind reading designed for the room in front of him.
+                            </p>
+                            <p className="performer-quote">
+                                <em>"Not just a show—an experience your guests will keep talking about."</em>
+                            </p>
+                        </div>
+                    </div>
+                </div>
             </section>
         </div>
     )
