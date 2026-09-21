@@ -15,7 +15,20 @@
   margin: 0;
   box-sizing: border-box;
 }
-
+/* Global scrollbar */
+::-webkit-scrollbar {
+    width: 3.5px;
+}
+::-webkit-scrollbar-track {
+    background: #354D41;
+}
+::-webkit-scrollbar-thumb {
+    background: #E5BA5A;
+    border-radius: 10px;
+}
+::-webkit-scrollbar-thumb:hover {
+    background: #e5b95ab6;
+}
 
 @media (min-width: 1200px) and (max-width: 1439px) {
   .hero-content {
@@ -181,7 +194,7 @@
   .hero-enquire-btn {
     font-size: 24px !important;
     padding: 12px 24px !important;
-    margin-left: 12px;
+    margin-left: 15px;
   }
 
   .hero-person-img {
@@ -300,6 +313,235 @@
   .performer-heading {
     font-size: 32px;
   }
+
+  /* Services Section Tablet */
+  .services-cards-container {
+    flex-direction: column;
+    align-items: center;
+    margin-top: -120px;
+    gap: 35px;
+  }
+
+  .services-card {
+    width: 100%;
+    max-width: 450px;
+  }
+
+  .services-heading {
+    font-size: 40px;
+  }
+
+  .services-cursive-tag {
+    font-size: 45px;
+  }
+
+  /* More Section Tablet */
+  .more-cards-container {
+    flex-direction: column;
+    align-items: center;
+    gap: 35px;
+  }
+
+  .more-card,
+  .more-card.card-center {
+    margin-top: 0;
+    width: 100%;
+    max-width: 450px;
+  }
+
+  .more-heading {
+    font-size: 40px;
+  }
+
+  .more-cursive-tag {
+    font-size: 45px;
+  }
+
+  /* Experience Section Tablet */
+  .experience-container {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 40px !important;
+  }
+
+  .experience-left-content {
+    max-width: 100% !important;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .experience-heading {
+    font-size: 40px;
+  }
+
+  .experience-cursive-tag {
+    font-size: 45px;
+  }
+
+  .experience-right-wrap {
+    width: 100%;
+    max-width: 480px !important;
+  }
+
+  .experience-bg-layer {
+    width: 100%;
+    opacity: 0.2;
+  }
+
+  /* Brands Section Tablet */
+  .brands-heading {
+    font-size: 40px;
+  }
+
+  .brands-cursive-tag {
+    font-size: 45px;
+  }
+
+  .brand-card {
+    width: 170px;
+    height: 95px;
+    padding: 10px 15px;
+  }
+
+  /* Testimonials Section Tablet */
+  .testimonials-heading {
+    font-size: 40px;
+  }
+
+  .testimonials-cursive-tag {
+    font-size: 45px;
+  }
+
+  .review-card {
+    width: 290px;
+  }
+
+  /* Footer Section Tablet */
+  .contact-form-card {
+    margin-bottom: -280px;
+    padding: 35px 25px;
+  }
+
+  .form-row {
+    flex-direction: column;
+    gap: 15px;
+  }
+
+  .footer-section {
+    padding-top: 320px;
+  }
+
+  .footer-grid {
+    flex-direction: column;
+    align-items: center;
+    gap: 30px;
+  }
+
+  .footer-links-col {
+    justify-content: center;
+  }
+
+  /* About Page Tablet */
+  .about-hero-container {
+    flex-direction: column;
+    align-items: center;
+    gap: 40px;
+  }
+
+  .about-image-column {
+    width: 380px;
+    margin-top: 0;
+  }
+
+  .about-text-column {
+    align-items: center;
+    text-align: center;
+  }
+
+  .about-bio-text p {
+    text-align: center;
+  }
+
+  .about-main-title {
+    font-size: 55px;
+  }
+
+  .about-sub-heading {
+    font-size: 26px;
+  }
+
+  .recent-events-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+  }
+
+  .recent-events-title {
+    font-size: 40px;
+  }
+
+  /* Services Page Tablet */
+  .services-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 20px !important;
+  }
+
+  .services-page-title {
+    font-size: 55px;
+  }
+
+  .services-page-subtitle {
+    font-size: 26px;
+  }
+
+  /* ServiceView Page Tablet */
+  .service-view-row,
+  .service-view-row.reverse-row {
+    flex-direction: column !important;
+    gap: 30px !important;
+  }
+
+  .service-view-img-col {
+    flex: 0 0 auto !important;
+    width: 100% !important;
+    max-width: 550px !important;
+  }
+
+  .service-view-main-title {
+    font-size: 38px !important;
+  }
+
+  .service-view-section-title {
+    font-size: 34px !important;
+  }
+
+  /* Gallery Page Tablet */
+  .gallery-collage-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+    grid-auto-rows: 200px !important;
+    gap: 15px !important;
+  }
+
+  .gallery-page-title {
+    font-size: 55px !important;
+  }
+
+  /* Events & EventView Page Tablet */
+  .events-page-grid,
+  .event-view-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 20px !important;
+  }
+
+  .events-page-title,
+  .event-view-main-title {
+    font-size: 55px !important;
+  }
+
+  .event-view-sub-title {
+    font-size: 26px !important;
+  }
 }
 
 /* Mobile */
@@ -310,7 +552,7 @@
 
   .performer-heading {
     font-size: 26px !important;
-    line-height: 1.7 !important;
+    line-height: 1.5 !important;
   }
 
   .performer-italic-tag {
@@ -325,6 +567,535 @@
     padding: 40px 15px 50px;
   }
   .performer-bio {
-font-size: 22px;
+    font-size: 22px;
+  }
+
+  /* Services Section Mobile */
+  .services-green-bg {
+    padding: 45px 15px 120px;
+  }
+
+  .services-cursive-tag {
+    font-size: 42px !important;
+  }
+
+  .services-heading {
+    font-size: 26px !important;
+    line-height: 1.5 !important;
+  }
+
+  .services-cards-container {
+    flex-direction: column !important;
+    align-items: center !important;
+    margin-top: -90px !important;
+    gap: 30px !important;
+    padding: 0 15px !important;
+  }
+
+  .services-card {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .services-card-img-wrap {
+    height: 240px !important;
+  }
+
+  .services-card-title {
+    font-size: 20px !important;
+    line-height: 1.5 !important;
+  }
+
+  .services-card-desc {
+    font-size: 17px !important;
+  }
+
+  .services-view-all-btn {
+    font-size: 24px !important;
+    padding: 10px 30px !important;
+  }
+
+  /* More Section Mobile */
+  .more-section {
+    padding: 0px 15px 0px;
+  }
+
+  .more-cursive-tag {
+    font-size: 42px !important;
+  }
+
+  .more-heading {
+    font-size: 28px !important;
+    line-height: 1.2 !important;
+  }
+
+  .more-cards-container {
+    position: relative;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 35px;
+    padding-left: 30px;
+  }
+
+  .more-cards-container::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 10px;
+    width: 2px;
+    background: #E5BA5A;
+    z-index: 2;
+  }
+
+  .more-card, .more-card.card-center {
+    margin-top: 0 !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    min-height: auto;
+    padding: 20px 16px !important;
+    border-radius: 8px !important;
+    position: relative;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    gap: 15px !important;
+  }
+
+  .more-card::before {
+    content: '';
+    position: absolute;
+    left: -20px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 20px;
+    height: 2px;
+    background: #E5BA5A;
+    z-index: 3;
+  }
+
+  .more-card-dot {
+    top: 50% !important;
+    left: -20px !important;
+    transform: translate(-50%, -50%) !important;
+    width: 16px !important;
+    height: 16px !important;
+    z-index: 5 !important;
+  }
+
+  .more-card-title {
+    flex: 0 0 42% !important;
+    font-size: 15px !important;
+    text-align: left !important;
+    margin-bottom: 0 !important;
+    line-height: 1.5 !important;
+  }
+
+  .more-card-desc {
+    flex: 1 !important;
+    font-size: 26px !important;
+    text-align: left !important;
+    line-height: 1.3 !important;
+  }
+
+  /* Experience Section Mobile */
+  .experience-section {
+    padding: 0px 15px 0px;
+  }
+
+  .experience-cursive-tag {
+    font-size: 42px !important;
+  }
+
+  .experience-heading {
+    font-size: 28px !important;
+    line-height: 1.2 !important;
+  }
+
+  .experience-text {
+    font-size: 18px;
+    line-height: 1.4;
+  }
+
+  .experience-read-btn {
+    font-size: 24px !important;
+    padding: 10px 35px !important;
+  }
+
+  .experience-right-wrap {
+    max-width: 100% !important;
+  }
+
+  /* Brands Section Mobile */
+  .brands-section {
+    padding: 0 0 60px 0;
+    clip-path: polygon(0 0, 100% 0, 100% 92%, 0 100%);
+  }
+
+  .brands-cursive-tag {
+    font-size: 38px !important;
+  }
+
+  .brands-heading {
+    font-size: 28px !important;
+    line-height: 1.6 !important;
+  }
+
+  .brand-card {
+    width: 150px;
+    height: 85px;
+    padding: 10px;
+  }
+
+  .brand-card.card-high {
+    transform: translateY(-12px);
+  }
+
+  .brand-card.card-low {
+    transform: translateY(12px);
+  }
+
+  /* Testimonials Section Mobile */
+  .testimonials-section {
+    padding: 45px 0 40px 0;
+  }
+
+  .testimonials-cursive-tag {
+    font-size: 42px !important;
+  }
+
+  .testimonials-heading {
+    font-size: 28px !important;
+    line-height: 1.5 !important;
+  }
+
+  .testimonials-nav-btns,
+  .testimonials-footer {
+    display: none !important;
+  }
+
+  .review-card {
+    width: 260px;
+    padding: 30px 16px 22px;
+  }
+
+  .review-text {
+    font-size: 20px !important;
+  }
+
+  .testimonials-line-divider {
+    width: 260px;
+  }
+
+  /* Unforgettable & Footer Mobile */
+  .unforget-cursive-tag {
+    font-size: 42px !important;
+    margin-bottom: 15px !important;
+  }
+
+  .unforget-heading {
+    font-size: 28px !important;
+    line-height: 1.5 !important;
+  }
+
+  .unforget-subtext {
+    font-size: 24px !important;
+  }
+
+  .unforget-avail-btn {
+    font-size: 20px !important;
+    padding: 10px 30px !important;
+  }
+
+  .contact-form-card {
+    padding: 25px 15px !important;
+  }
+
+  .form-row {
+    flex-direction: column;
+    gap: 15px;
+  }
+
+  .form-submit-btn {
+    font-size: 20px !important;
+    padding: 12px 35px !important;
+  }
+
+  .footer-section {
+    padding-top: 360px !important;
+  }
+
+  .footer-links-col {
+    gap: 30px;
+  }
+  .review-author{
+    font-size: 14px !important;
+  }
+
+  /* About Page Mobile */
+  .about-hero-section {
+    padding: 40px 15px 60px !important;
+  }
+
+  .about-image-column {
+    width: 100% !important;
+    max-width: 320px !important;
+  }
+
+  .about-king-card {
+    left: -20px !important;
+    top: 20px !important;
+  }
+
+  .about-cursive-tag {
+    font-size: 40px !important;
+  }
+
+  .about-main-title {
+    font-size: 40px !important;
+    letter-spacing: 2px !important;
+  }
+
+  .about-sub-heading {
+    font-size: 22px !important;
+  }
+
+  .about-bio-text {
+    font-size: 17px !important;
+    gap: 14px !important;
+  }
+
+  .about-bio-text p {
+    text-align: left !important;
+  }
+
+  .about-contact-btn {
+    font-size: 20px !important;
+    padding: 12px 35px !important;
+  }
+
+  .recent-events-section {
+    padding: 50px 15px !important;
+  }
+
+  .recent-cursive-tag {
+    font-size: 38px !important;
+  }
+
+  .recent-events-title {
+    font-size: 28px !important;
+  }
+
+  .recent-events-subtitle {
+    font-size: 18px !important;
+  }
+
+  .recent-events-grid {
+    grid-template-columns: 1fr !important;
+    gap: 20px !important;
+  }
+
+  .view-more-events-btn {
+    font-size: 20px !important;
+    padding: 12px 30px !important;
+  }
+
+  /* Services Page Mobile */
+  .services-page-hero {
+    padding: 40px 15px 60px !important;
+  }
+
+  .services-page-title {
+    font-size: 38px !important;
+    letter-spacing: 2px !important;
+  }
+
+  .services-page-subtitle {
+    font-size: 22px !important;
+  }
+
+  .services-page-description {
+    font-size: 17px !important;
+    line-height: 1.4 !important;
+  }
+
+  .services-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 12px !important;
+  }
+
+  .service-grid-img-wrap {
+    height: 150px !important;
+  }
+
+  .service-grid-title {
+    font-size: 15px !important;
+    padding: 10px 8px !important;
+    letter-spacing: 0.5px !important;
+  }
+
+  .view-more-services-btn {
+    font-size: 20px !important;
+    padding: 12px 30px !important;
+  }
+
+  /* ServiceView Page Mobile */
+  .service-view-hero {
+    padding: 40px 15px 60px !important;
+  }
+
+  .service-view-container {
+    gap: 50px !important;
+  }
+
+  .service-view-main-title {
+    font-size: 28px !important;
+    line-height: 1.25 !important;
+  }
+
+  .service-view-section-title {
+    font-size: 26px !important;
+    line-height: 1.25 !important;
+  }
+
+  .service-view-sub-title {
+    font-size: 22px !important;
+  }
+
+  .service-view-paragraphs p {
+    font-size: 17px !important;
+    line-height: 1.5 !important;
+  }
+
+  .service-view-contact-box {
+    padding: 25px 15px !important;
+  }
+
+  .contact-box-label {
+    font-size: 20px !important;
+  }
+
+  .contact-box-phones a {
+    font-size: 20px !important;
+  }
+
+  .contact-box-email {
+    font-size: 20px !important;
+    word-break: break-all;
+  }
+
+  .contact-box-footer-tag {
+    font-size: 18px !important;
+  }
+
+  /* Gallery Page Mobile */
+  .gallery-page-hero {
+    padding: 40px 15px 60px !important;
+  }
+
+  .gallery-page-title {
+    font-size: 38px !important;
+    letter-spacing: 2px !important;
+  }
+
+  .gallery-page-subtitle {
+    font-size: 22px !important;
+  }
+
+  .gallery-filter-bar {
+    gap: 8px !important;
+    margin-bottom: 30px !important;
+  }
+
+  .gallery-filter-btn {
+    font-size: 15px !important;
+    padding: 7px 14px !important;
+  }
+
+  .gallery-collage-grid {
+    grid-template-columns: 1fr !important;
+    grid-auto-rows: minmax(180px, auto) !important;
+    gap: 15px !important;
+  }
+
+  .gallery-item-small,
+  .gallery-item-medium,
+  .gallery-item-tall,
+  .gallery-item-wide,
+  .gallery-item-large {
+    grid-column: span 1 !important;
+    grid-row: span 1 !important;
+    height: 220px !important;
+  }
+
+  .gallery-item-large.video-card {
+    height: 240px !important;
+  }
+
+  /* Events & EventView Page Mobile (2x2 Grid) */
+  .events-page-hero,
+  .event-view-hero {
+    padding: 40px 15px 60px !important;
+  }
+
+  .events-page-title {
+    font-size: 38px !important;
+    letter-spacing: 2px !important;
+  }
+
+  .events-page-subtitle {
+    font-size: 22px !important;
+  }
+
+  .events-page-description {
+    font-size: 17px !important;
+    line-height: 1.4 !important;
+  }
+
+  .events-page-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 12px !important;
+  }
+
+  .events-grid-img-wrap {
+    height: 140px !important;
+  }
+
+  .events-grid-body {
+    padding: 10px 8px 14px !important;
+  }
+
+  .events-grid-badge {
+    font-size: 11px !important;
+    padding: 2px 8px !important;
+    margin-bottom: 6px !important;
+  }
+
+  .events-grid-card-title {
+    font-size: 14px !important;
+    line-height: 1.3 !important;
+  }
+
+  .event-view-cursive-tag {
+    font-size: 36px !important;
+  }
+
+  .event-view-main-title {
+    font-size: 32px !important;
+    letter-spacing: 1.5px !important;
+  }
+
+  .event-view-sub-title {
+    font-size: 20px !important;
+    letter-spacing: 1px !important;
+  }
+
+  .event-view-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 12px !important;
+  }
+
+  .event-view-img-wrap {
+    height: 140px !important;
   }
 }
