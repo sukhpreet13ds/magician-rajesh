@@ -1,0 +1,204 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+// ---------- Auth ----------
+
+model AdminUser {
+  id           Int      @id @default(autoincrement())
+  email        String   @unique
+  passwordHash String
+  createdAt    DateTime @default(now())
+}
+
+// ---------- Site-wide settings (singleton row, id = 1) ----------
+
+model SiteSettings {
+  id                  Int      @id @default(1)
+  logoUrl             String?
+  heroBackgroundUrl   String?
+  phonePrimary        String?
+  phoneSecondary      String?
+  phoneTertiary       String?
+  emailPrimary        String?
+  emailBooking        String?
+  facebookUrl         String?
+  instagramUrl        String?
+  youtubeUrl          String?
+  footerHeading       String?
+  footerHighlightWord String?
+  footerBackgroundUrl String?
+  footerSubtext       String?  @db.Text
+  footerCopyrightText String?
+  contactPersonName   String?
+  contactPersonTitle  String?
+  updatedAt           DateTime @updatedAt
+}
+
+// ---------- Flexible per-page content blobs ----------
+// Used for Home / About / Services / Gallery / Events / Blogs / Contact / Privacy / Terms
+// hero tag, headings, paragraphs, CTA text, etc. Shape is free-form JSON per pageSlug,
+// documented in lib/pageContentDefaults.js on the Next.js side and consumed as-is by
+// the Vite site (no schema migration needed to add a new text field to a page).
+
+model PageContent {
+  id        Int      @id @default(autoincrement())
+  pageSlug  String   @unique
+  heroImage String?
+  content   Json
+  updatedAt DateTime @updatedAt
+}
+
+// ---------- Nav / footer link labels (paths stay fixed, label+order+visibility editable) ----------
+
+model NavLink {
+  id        Int     @id @default(autoincrement())
+  label     String
+  path      String
+  sortOrder Int     @default(0)
+  visible   Boolean @default(true)
+}
+
+// ---------- Services ----------
+
+model Service {
+  id                  Int      @id @default(autoincrement())
+  slug                String   @unique
+  title               String
+  cardImageUrl        String?
+  cardDescription     String?  @db.Text
+  detailHeading       String?
+  detailSubheading    String?
+  detailParagraphs    Json? // string[]
+  detailImageUrl      String?
+  detailSecondHeading String?
+  detailParagraphs2   Json? // string[] — second block of paragraphs, shown after detailSecondHeading
+  detailImageUrl2     String?
+  sortOrder           Int      @default(0)
+  published           Boolean  @default(true)
+  createdAt           DateTime @default(now())
+  updatedAt           DateTime @updatedAt
+}
+
+// ---------- Events ----------
+
+model Event {
+  id               Int          @id @default(autoincrement())
+  slug             String       @unique
+  title            String
+  eventDate        DateTime?
+  displayDate      String? // free-text fallback e.g. "Thursday 1st of January"
+  cardImageUrl     String?
+  detailTag        String?
+  detailHeading    String?
+  detailSubheading String?
+  sortOrder        Int          @default(0)
+  published        Boolean      @default(true)
+  photos           EventPhoto[]
+  createdAt        DateTime     @default(now())
+  updatedAt        DateTime     @updatedAt
+}
+
+model EventPhoto {
+  id        Int     @id @default(autoincrement())
+  eventId   Int
+  event     Event   @relation(fields: [eventId], references: [id], onDelete: Cascade)
+  imageUrl  String
+  title     String?
+  sortOrder Int     @default(0)
+
+  @@index([eventId])
+}
+
+// ---------- Gallery ----------
+
+model GalleryItem {
+  id           Int     @id @default(autoincrement())
+  type         String // "image" | "video"
+  imageUrl     String?
+  videoEmbedId String?
+  title        String?
+  category     String // "videos" | "corporate" | "stage" | "events" | ...
+  sizeClass    String // "gallery-item-large" | "small" | "tall" | "wide" | "medium"
+  sortOrder    Int     @default(0)
+  published    Boolean @default(true)
+}
+
+// ---------- Blogs ----------
+
+model Blog {
+  id             Int      @id @default(autoincrement())
+  slug           String   @unique
+  title          String
+  publishedDate  DateTime @default(now())
+  category       String
+  readTime       String?
+  author         String?
+  imageUrl       String?
+  summary        String?  @db.Text
+  content        Json // string[] paragraphs
+  quote          String?  @db.Text
+  youtubeVideoId String?
+  videoTitle     String?
+  sortOrder      Int      @default(0)
+  published      Boolean  @default(true)
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+}
+
+// ---------- Testimonials ----------
+
+model Testimonial {
+  id        Int     @id @default(autoincrement())
+  name      String
+  rating    Int     @default(5)
+  text      String  @db.Text
+  sortOrder Int     @default(0)
+  published Boolean @default(true)
+}
+
+// ---------- Brands ----------
+
+model Brand {
+  id        Int     @id @default(autoincrement())
+  name      String?
+  logoUrl   String
+  sortOrder Int     @default(0)
+  published Boolean @default(true)
+}
+
+// ---------- Leads captured from the two public forms ----------
+
+model ContactSubmission {
+  id        Int      @id @default(autoincrement())
+  firstName String
+  lastName  String
+  email     String
+  phone     String
+  subject   String?
+  message   String   @db.Text
+  read      Boolean  @default(false)
+  createdAt DateTime @default(now())
+}
+
+model BookingEnquiry {
+  id             Int      @id @default(autoincrement())
+  eventType      String?
+  firstName      String
+  lastName       String
+  email          String
+  phone          String
+  eventDate      DateTime?
+  location       String?
+  guestCount     String?
+  knownFor       String?
+  privacyConsent Boolean  @default(false)
+  emailConsent   Boolean  @default(false)
+  read           Boolean  @default(false)
+  createdAt      DateTime @default(now())
+}
