@@ -22,7 +22,7 @@ import {
 
 const prisma = new PrismaClient();
 
-const OLD_PROJECT_ROOT = path.resolve(process.cwd(), "..", "magician-rajesh");
+const OLD_PROJECT_ROOT = path.resolve(process.cwd(), "..", "frontend");
 const UPLOADS_DIR = path.resolve(process.cwd(), "public", "uploads", "seed");
 const APP_URL = process.env.APP_URL || "http://localhost:3001";
 

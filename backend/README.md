@@ -1,10 +1,12 @@
-# magician-rajesh-admin
+# backend
 
 Backend + admin portal for the Rajesh Kumar magician website. Next.js (App
 Router) + Prisma + MySQL, deployed separately from the public site. The
-public site (the `magician-rajesh` Vite/React app) fetches its content from
+public site (`../frontend`, the Vite/React app) fetches its content from
 this app's `/api/public/*` endpoints instead of hardcoding it; admins manage
-everything under `/admin`.
+everything under `/admin`. This directory and `../frontend` live in one repo
+but remain two separate apps/processes — a Vite SPA and a Next.js server
+can't run as a single process.
 
 ## First-time setup
 
@@ -44,7 +46,7 @@ everything under `/admin`.
 
 ## Connecting the public Vite site
 
-In `magician-rajesh/.env.local`, `VITE_API_URL` must point at this app's
+In `../frontend/.env.local`, `VITE_API_URL` must point at this app's
 origin (`http://localhost:3001` in dev). In production, set it to wherever
 this app is deployed, and set this app's `PUBLIC_SITE_ORIGINS` / `APP_URL` in
 `.env.local` (or the server's env) to match the deployed site's real origin(s)
