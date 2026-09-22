@@ -1,9 +1,12 @@
 import { useState, useEffect, useRef } from 'react'
 import { NavLink, Link, useLocation } from 'react-router-dom'
 import './style/style.css'
-import logo from '../assets/magician-logo.png'
+import logoFallback from '../assets/magician-logo.png'
+import { api } from '../lib/api'
 
-const navLinks = [
+// Default nav links match the site's fixed routes; only used until the fetch
+// resolves so the menu never flashes empty.
+const DEFAULT_NAV_LINKS = [
   { path: '/', label: 'HOME', end: true },
   { path: '/about', label: 'ABOUT' },
   { path: '/services', label: 'SERVICES' },
@@ -19,6 +22,27 @@ const Navbar = () => {
   const canvasRef = useRef(null)
   const animationFrameRef = useRef(null)
   const location = useLocation()
+
+  const [navLinks, setNavLinks] = useState(DEFAULT_NAV_LINKS)
+  const [settings, setSettings] = useState({
+    logoUrl: logoFallback,
+    phonePrimary: '+919372074683',
+    youtubeUrl: 'https://youtube.com',
+    instagramUrl: 'https://instagram.com',
+    emailPrimary: 'contact@magicianrajesh.com',
+  })
+
+  useEffect(() => {
+    api
+      .site()
+      .then((data) => {
+        if (data.navLinks?.length) {
+          setNavLinks(data.navLinks.map((l) => ({ path: l.path, label: l.label, end: l.path === '/' })))
+        }
+        setSettings((s) => ({ ...s, ...data.settings, logoUrl: data.settings.logoUrl || logoFallback }))
+      })
+      .catch(() => {})
+  }, [])
 
   // Close menu when route changes
   useEffect(() => {
@@ -214,7 +238,7 @@ const Navbar = () => {
           <span className="nav-section-title">Follow us on Social Media</span>
           <div className="nav-social-icons">
             <a
-              href="https://youtube.com"
+              href={settings.youtubeUrl}
               target="_blank"
               rel="noopener noreferrer"
               className="social-icon-btn"
@@ -223,14 +247,14 @@ const Navbar = () => {
               <i className="fa-brands fa-youtube"></i>
             </a>
             <a
-              href="mailto:contact@magicianrajesh.com"
+              href={`mailto:${settings.emailPrimary}`}
               className="social-icon-btn"
               aria-label="Email"
             >
               <i className="fa-solid fa-envelope"></i>
             </a>
             <a
-              href="https://instagram.com"
+              href={settings.instagramUrl}
               target="_blank"
               rel="noopener noreferrer"
               className="social-icon-btn"
@@ -245,7 +269,7 @@ const Navbar = () => {
         <div className="nav-logo-section">
           <Link to="/" onClick={closeMobileMenu}>
             <img
-              src={logo}
+              src={settings.logoUrl}
               alt="Rajesh Kumar - Techno Magician / Illusionist / Mentalist"
               className="nav-logo-img"
             />
@@ -256,11 +280,11 @@ const Navbar = () => {
         <div className="nav-contact-section">
           <span className="nav-section-title">Contact For Booking</span>
           <div className="nav-phone-wrap">
-            <a href="tel:+919372074683" className="phone-icon-btn" aria-label="Call">
+            <a href={`tel:${settings.phonePrimary}`} className="phone-icon-btn" aria-label="Call">
               <i className="fa-solid fa-phone"></i>
             </a>
-            <a href="tel:+919372074683" className="nav-phone-number">
-              +91 93720 74683
+            <a href={`tel:${settings.phonePrimary}`} className="nav-phone-number">
+              {settings.phonePrimary}
             </a>
           </div>
         </div>
@@ -314,7 +338,7 @@ const Navbar = () => {
         <div className="mobile-panel-header">
           <Link to="/" onClick={closeMobileMenu}>
             <img
-              src={logo}
+              src={settings.logoUrl}
               alt="Rajesh Kumar Magician"
               className="mobile-panel-logo"
             />
@@ -366,8 +390,8 @@ const Navbar = () => {
           >
             <div className="mobile-panel-contact">
               <span className="mobile-footer-title">Contact For Booking</span>
-              <a href="tel:+919372074683" className="mobile-phone-link">
-                <i className="fa-solid fa-phone"></i> +91 93720 74683
+              <a href={`tel:${settings.phonePrimary}`} className="mobile-phone-link">
+                <i className="fa-solid fa-phone"></i> {settings.phonePrimary}
               </a>
             </div>
 
@@ -375,7 +399,7 @@ const Navbar = () => {
               <span className="mobile-footer-title">Follow us on Social Media</span>
               <div className="mobile-social-icons">
                 <a
-                  href="https://youtube.com"
+                  href={settings.youtubeUrl}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="social-icon-btn"
@@ -384,14 +408,14 @@ const Navbar = () => {
                   <i className="fa-brands fa-youtube"></i>
                 </a>
                 <a
-                  href="mailto:contact@magicianrajesh.com"
+                  href={`mailto:${settings.emailPrimary}`}
                   className="social-icon-btn"
                   aria-label="Email"
                 >
                   <i className="fa-solid fa-envelope"></i>
                 </a>
                 <a
-                  href="https://instagram.com"
+                  href={settings.instagramUrl}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="social-icon-btn"

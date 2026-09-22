@@ -1,32 +1,55 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import './style/style.css';
-import backWall from '../assets/back-wall.jpg';
-import { useLocation, useNavigate, useSearchParams, Link } from 'react-router-dom';
-import { blogsData } from '../data/blogsData';
+import backWallFallback from '../assets/back-wall.jpg';
+import { useParams, useLocation, Link } from 'react-router-dom';
+import { api } from '../lib/api';
+
+function formatDate(iso) {
+    return new Date(iso).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+}
 
 const BlogView = () => {
+    const { slug } = useParams();
     const location = useLocation();
-    const navigate = useNavigate();
-    const [searchParams] = useSearchParams();
-    const blogIdFromQuery = searchParams.get('id');
+    const [blog, setBlog] = useState(null);
+    const [notFound, setNotFound] = useState(false);
 
     // Scroll to top on load
     useEffect(() => {
         window.scrollTo({ top: 0, behavior: 'smooth' });
     }, [location]);
 
-    // Find blog from location state, or URL query param, or fallback to first blog
-    const blog = location.state?.blog || 
-                 blogsData.find(b => b.id === blogIdFromQuery) || 
-                 blogsData[0];
+    useEffect(() => {
+        setBlog(null);
+        setNotFound(false);
+        api
+            .blog(slug)
+            .then((data) => setBlog(data))
+            .catch(() => setNotFound(true));
+    }, [slug]);
 
-    // Other blogs for related reading
-    const relatedBlogs = blogsData.filter(b => b.id !== blog.id);
+    if (notFound) {
+        return (
+            <div className="blog-view-wrapper">
+                <section className="blog-view-hero" style={{ backgroundImage: `url(${backWallFallback})` }}>
+                    <div className="blog-view-overlay"></div>
+                    <div className="blog-view-container">
+                        <h1 className="blog-view-title">Blog not found</h1>
+                        <p><Link to="/blogs">Back to Blogs</Link></p>
+                    </div>
+                </section>
+            </div>
+        );
+    }
+
+    if (!blog) return null;
+
+    const relatedBlogs = blog.related || [];
 
     return (
         <div className="blog-view-wrapper">
             {/* ===== BLOG VIEW HERO & MAIN SECTION ===== */}
-            <section className="blog-view-hero" style={{ backgroundImage: `url(${backWall})` }}>
+            <section className="blog-view-hero" style={{ backgroundImage: `url(${backWallFallback})` }}>
                 <div className="blog-view-overlay"></div>
 
                 <div className="blog-view-container">
@@ -45,7 +68,7 @@ const BlogView = () => {
                     <div className="blog-view-header animate-on-scroll">
                         <div className="blog-view-badge-row">
                             <span className="blog-view-category-badge">{blog.category}</span>
-                            <span className="blog-view-meta-item">• {blog.date}</span>
+                            <span className="blog-view-meta-item">• {formatDate(blog.publishedDate)}</span>
                             <span className="blog-view-meta-item">• {blog.readTime}</span>
                         </div>
                         <h1 className="blog-view-title">{blog.title}</h1>
@@ -54,7 +77,7 @@ const BlogView = () => {
 
                     {/* Main Featured Image */}
                     <div className="blog-view-featured-img-wrap animate-on-scroll">
-                        <img src={blog.image} alt={blog.title} className="blog-view-featured-img" />
+                        <img src={blog.imageUrl} alt={blog.title} className="blog-view-featured-img" />
                     </div>
 
                     {/* Blog Content Section */}
@@ -97,32 +120,32 @@ const BlogView = () => {
                     )}
 
                     {/* Related Blogs Section */}
-                    <div className="blog-view-related-section animate-on-scroll">
-                        <h3 className="related-section-title">EXPLORE MORE BLOGS</h3>
-                        <div className="blogs-page-grid related-grid">
-                            {relatedBlogs.slice(0, 3).map((item) => (
-                                <div
-                                    key={item.id}
-                                    className="blogs-grid-card animate-on-scroll"
-                                    onClick={() => navigate('/blog-view', { state: { blog: item } })}
-                                    role="button"
-                                    tabIndex={0}
-                                    onKeyDown={(e) => { if (e.key === 'Enter') navigate('/blog-view', { state: { blog: item } }); }}
-                                >
-                                    <div className="blogs-grid-img-wrap">
-                                        <img src={item.image} alt={item.title} className="blogs-grid-img" />
-                                        <span className="blogs-category-tag">{item.category}</span>
-                                    </div>
-                                    <div className="blogs-grid-body">
-                                        <div className="blogs-meta-row">
-                                            <span className="blogs-grid-date">{item.date}</span>
+                    {relatedBlogs.length > 0 && (
+                        <div className="blog-view-related-section animate-on-scroll">
+                            <h3 className="related-section-title">EXPLORE MORE BLOGS</h3>
+                            <div className="blogs-page-grid related-grid">
+                                {relatedBlogs.slice(0, 3).map((item) => (
+                                    <Link
+                                        key={item.id}
+                                        to={`/blogs/${item.slug}`}
+                                        className="blogs-grid-card animate-on-scroll"
+                                        style={{ textDecoration: 'none', color: 'inherit' }}
+                                    >
+                                        <div className="blogs-grid-img-wrap">
+                                            <img src={item.imageUrl} alt={item.title} className="blogs-grid-img" />
+                                            <span className="blogs-category-tag">{item.category}</span>
                                         </div>
-                                        <h4 className="blogs-grid-card-title">{item.title}</h4>
-                                    </div>
-                                </div>
-                            ))}
+                                        <div className="blogs-grid-body">
+                                            <div className="blogs-meta-row">
+                                                <span className="blogs-grid-date">{formatDate(item.publishedDate)}</span>
+                                            </div>
+                                            <h4 className="blogs-grid-card-title">{item.title}</h4>
+                                        </div>
+                                    </Link>
+                                ))}
+                            </div>
                         </div>
-                    </div>
+                    )}
                 </div>
             </section>
         </div>

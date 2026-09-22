@@ -1,19 +1,20 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import './style/style.css';
 import brandBg from '../assets/brand-bg.jpg';
+import { api } from '../lib/api';
 
-// Import all brand images dynamically from assets/brands/
-const brandModules = import.meta.glob('../assets/brands/*.png', { eager: true });
+const BrandsMarquee = ({ tag = 'A selection', heading = 'BRANDS RAJESH WORK WITH' }) => {
+    const [brandImages, setBrandImages] = useState([]);
 
-const brandImages = Object.keys(brandModules)
-    .sort((a, b) => {
-        const numA = parseInt(a.match(/brand(\d+)\.png/)?.[1] || '0', 10);
-        const numB = parseInt(b.match(/brand(\d+)\.png/)?.[1] || '0', 10);
-        return numA - numB;
-    })
-    .map(key => brandModules[key].default);
+    useEffect(() => {
+        api
+            .brands()
+            .then((items) => setBrandImages(items.map((b) => b.logoUrl)))
+            .catch(() => {});
+    }, []);
 
-const BrandsMarquee = () => {
+    if (brandImages.length === 0) return null;
+
     // Duplicate brand images for a seamless loop marquee
     const marqueeBrands = [...brandImages, ...brandImages];
 
@@ -23,8 +24,8 @@ const BrandsMarquee = () => {
             <div className="brands-top-line"></div>
 
             <div className="brands-header">
-                <p className="brands-cursive-tag">A selection</p>
-                <h2 className="brands-heading">BRANDS RAJESH WORK WITH</h2>
+                <p className="brands-cursive-tag">{tag}</p>
+                <h2 className="brands-heading">{heading}</h2>
             </div>
 
             {/* Snake Marquee Wrapper */}
@@ -40,7 +41,7 @@ const BrandsMarquee = () => {
 
                                 <img
                                     src={imgSrc}
-                                    alt={`Brand ${(index % 47) + 1}`}
+                                    alt={`Brand ${(index % brandImages.length) + 1}`}
                                     className="brand-card-img"
                                 />
                             </div>

@@ -1,65 +1,24 @@
-import React, { useRef, useEffect } from 'react';
+import React, { useRef, useEffect, useState } from 'react';
 import './style/style.css';
+import { api } from '../lib/api';
 
-const reviews = [
-    {
-        id: 1,
-        name: "Pratik Bansode",
-        rating: 5,
-        text: "Very nice magician i also love his YouTube video"
-    },
-    {
-        id: 2,
-        name: "Magician Anchal The Magic Girl",
-        rating: 5,
-        text: "Magic with technology... Creative and unique performance 👍"
-    },
-    {
-        id: 3,
-        name: "Neeraj Bhuptani",
-        rating: 5,
-        text: "He is just amazing"
-    },
-    {
-        id: 4,
-        name: "Deepak Park",
-        rating: 5,
-        text: "Saw him in Asian paints event... spoon bending magic and mental magic"
-    },
-    {
-        id: 5,
-        name: "Amit Sharma",
-        rating: 5,
-        text: "Incredible corporate show! Left the entire audience completely speechless."
-    },
-    {
-        id: 6,
-        name: "Priya Malhotra",
-        rating: 5,
-        text: "Mind blowing mentalism and close-up magic. Best performer we've ever hired!"
-    },
-    {
-        id: 7,
-        name: "Vikram Mehta",
-        rating: 5,
-        text: "Highly engaging and energetic performance. Everyone kept talking about it all evening."
-    },
-    {
-        id: 8,
-        name: "Rohan Kapoor",
-        rating: 5,
-        text: "Superb iPad magic and stage illusions! Truly world-class experience."
-    }
-];
-
-const TestimonialsMarquee = () => {
+const TestimonialsMarquee = ({ tag = 'Valued by customers', heading = 'WITH THE HIGHEST STANDARDS' }) => {
     const trackRef = useRef(null);
+    const [reviews, setReviews] = useState([]);
+
+    useEffect(() => {
+        api
+            .testimonials()
+            .then((items) => setReviews(items))
+            .catch(() => {});
+    }, []);
+
     // 3 copies of reviews array for a 100% infinite seamless loop
     const marqueeReviews = [...reviews, ...reviews, ...reviews];
 
     useEffect(() => {
         const el = trackRef.current;
-        if (!el) return;
+        if (!el || reviews.length === 0) return;
 
         // Initialize scroll position in the middle set of cards
         const singleSetWidth = el.scrollWidth / 3;
@@ -114,7 +73,7 @@ const TestimonialsMarquee = () => {
             el.removeEventListener('touchend', onTouchEnd);
             el.removeEventListener('scroll', handleScroll);
         };
-    }, []);
+    }, [reviews]);
 
     const scrollLeft = () => {
         if (trackRef.current) {
@@ -128,11 +87,13 @@ const TestimonialsMarquee = () => {
         }
     };
 
+    if (reviews.length === 0) return null;
+
     return (
         <section className="testimonials-section">
             <div className="testimonials-header">
-                <p className="testimonials-cursive-tag">Valued by customers</p>
-                <h2 className="testimonials-heading">WITH THE HIGHEST STANDARDS</h2>
+                <p className="testimonials-cursive-tag">{tag}</p>
+                <h2 className="testimonials-heading">{heading}</h2>
             </div>
 
             {/* Simple Horizontal Marquee Container */}

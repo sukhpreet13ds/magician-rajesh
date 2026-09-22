@@ -1,37 +1,28 @@
 import React, { useState, useEffect } from 'react';
+import { useParams, Link } from 'react-router-dom';
 import './style/style.css';
-import backWall from '../assets/back-wall.jpg';
+import backWallFallback from '../assets/back-wall.jpg';
 import { AnimatePresence, motion } from 'framer-motion';
 import { FaChevronLeft, FaChevronRight } from 'react-icons/fa';
-
-import eventD1 from '../assets/event-d1.png';
-import eventD2 from '../assets/event-d2.png';
-import eventD3 from '../assets/event-d3.png';
-import eventD4 from '../assets/event-d4.png';
-import eventD5 from '../assets/event-d5.png';
-import eventD6 from '../assets/event-d6.png';
-import eventD7 from '../assets/event-d7.png';
-import eventD8 from '../assets/event-d8.png';
-import eventD9 from '../assets/event-d9.png';
-import eventD10 from '../assets/event-d10.png';
-import eventD11 from '../assets/event-d11.png';
+import { api } from '../lib/api';
 
 const EventView = () => {
+    const { slug } = useParams();
     const [selectedImage, setSelectedImage] = useState(null);
+    const [event, setEvent] = useState(null);
+    const [notFound, setNotFound] = useState(false);
 
-    const eventPhotos = [
-        { id: 1, image: eventD1, title: "Stage Illusions Performance" },
-        { id: 2, image: eventD2, title: "Corporate Screen Magic" },
-        { id: 3, image: eventD3, title: "Visual Mind Reading" },
-        { id: 4, image: eventD4, title: "Audience Stage Interaction" },
-        { id: 5, image: eventD5, title: "Live Magic Showcase" },
-        { id: 6, image: eventD6, title: "Corporate Event Gathering" },
-        { id: 7, image: eventD7, title: "Digital Screen Illusion" },
-        { id: 8, image: eventD8, title: "Interactive Card & Mind Trick" },
-        { id: 9, image: eventD9, title: "Spotlight Magic Act" },
-        { id: 10, image: eventD10, title: "Audience Surprise Moment" },
-        { id: 11, image: eventD11, title: "Stage Finale Magic" }
-    ];
+    useEffect(() => {
+        setEvent(null);
+        setNotFound(false);
+        setSelectedImage(null);
+        api
+            .event(slug)
+            .then((data) => setEvent(data))
+            .catch(() => setNotFound(true));
+    }, [slug]);
+
+    const eventPhotos = event?.photos || [];
 
     const handlePrevImage = (e) => {
         if (e) e.stopPropagation();
@@ -64,31 +55,49 @@ const EventView = () => {
 
         window.addEventListener('keydown', handleKeyDown);
         return () => window.removeEventListener('keydown', handleKeyDown);
-    }, [selectedImage]);
+    }, [selectedImage, eventPhotos]);
+
+    if (notFound) {
+        return (
+            <div className="event-view-wrapper">
+                <section className="event-view-hero" style={{ backgroundImage: `url(${backWallFallback})` }}>
+                    <div className="event-view-overlay"></div>
+                    <div className="event-view-container">
+                        <h1 className="event-view-main-title">Event not found</h1>
+                        <p><Link to="/events">Back to Events</Link></p>
+                    </div>
+                </section>
+            </div>
+        );
+    }
+
+    if (!event) return null;
 
     return (
         <div className="event-view-wrapper">
             {/* ===== EVENT VIEW HERO SECTION ===== */}
-            <section className="event-view-hero" style={{ backgroundImage: `url(${backWall})` }}>
+            <section className="event-view-hero" style={{ backgroundImage: `url(${backWallFallback})` }}>
                 <div className="event-view-overlay"></div>
 
                 <div className="event-view-container">
                     <div className="event-view-header animate-on-scroll">
-                        <p className="event-view-cursive-tag">Exclusive Performance Highlights</p>
-                        <h1 className="event-view-main-title">RAJESH KUMAR</h1>
-                        <h2 className="event-view-sub-title">LIVE @ MUMBAI FOR CORPORATE</h2>
+                        <p className="event-view-cursive-tag">{event.detailTag || 'Exclusive Performance Highlights'}</p>
+                        <h1 className="event-view-main-title">{event.detailHeading || event.title}</h1>
+                        {event.detailSubheading && (
+                            <h2 className="event-view-sub-title">{event.detailSubheading}</h2>
+                        )}
                     </div>
 
                     {/* Photos Grid Collage */}
                     <div className="event-view-grid">
                         {eventPhotos.map((photo) => (
-                            <div 
+                            <div
                                 key={photo.id}
                                 className="event-view-card animate-on-scroll"
                                 onClick={() => setSelectedImage(photo)}
                             >
                                 <div className="event-view-img-wrap">
-                                    <img src={photo.image} alt={photo.title} className="event-view-img" />
+                                    <img src={photo.imageUrl} alt={photo.title} className="event-view-img" />
                                     <div className="event-view-card-overlay">
                                         <span className="event-view-zoom-icon">
                                             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
@@ -109,7 +118,7 @@ const EventView = () => {
             {/* Modal Lightbox */}
             <AnimatePresence>
                 {selectedImage && (
-                    <motion.div 
+                    <motion.div
                         className="event-view-modal-backdrop"
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
@@ -121,15 +130,15 @@ const EventView = () => {
 
                             {eventPhotos.length > 1 && (
                                 <>
-                                    <button 
-                                        className="event-view-modal-nav prev-btn" 
+                                    <button
+                                        className="event-view-modal-nav prev-btn"
                                         onClick={handlePrevImage}
                                         aria-label="Previous image"
                                     >
                                         <FaChevronLeft />
                                     </button>
-                                    <button 
-                                        className="event-view-modal-nav next-btn" 
+                                    <button
+                                        className="event-view-modal-nav next-btn"
                                         onClick={handleNextImage}
                                         aria-label="Next image"
                                     >
@@ -138,7 +147,7 @@ const EventView = () => {
                                 </>
                             )}
 
-                            <img src={selectedImage.image} alt={selectedImage.title} className="event-view-modal-img" />
+                            <img src={selectedImage.imageUrl} alt={selectedImage.title} className="event-view-modal-img" />
                             <p className="event-view-modal-caption">{selectedImage.title}</p>
                         </div>
                     </motion.div>
