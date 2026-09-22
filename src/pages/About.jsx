@@ -1,16 +1,20 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './style/style.css';
 import backWall from '../assets/back-wall.jpg';
 import magicianRajesh from '../assets/magician-rajesh.png';
-import kingCard from '../assets/king.jpg';
 import igtStage from '../assets/igt-stage.png';
 import event1 from '../assets/magice-service1.png';
 import event2 from '../assets/magic-service2.png';
 import event3 from '../assets/magice-service3.png';
-import FooterSection from '../components/FooterSection';
-import { motion } from 'framer-motion';
+import { Link } from 'react-router-dom';
 
 const About = () => {
+    const [selectedCards, setSelectedCards] = useState({});
+
+    const toggleCard = (id) => {
+        setSelectedCards(prev => ({ ...prev, [id]: !prev[id] }));
+    };
+
     const recentEvents = [
         {
             id: 1,
@@ -45,30 +49,60 @@ const About = () => {
                 <div className="about-hero-overlay"></div>
 
                 <div className="about-hero-container">
-                    {/* Left Column: Image with King Card Backdrop */}
-                    <div className="about-image-column">
-                        <img 
-                            src={kingCard} 
-                            alt="King Card" 
-                            className="about-king-card" 
-                        />
-                        <motion.img 
-                            src={magicianRajesh} 
-                            alt="Magician Rajesh Kumar" 
-                            className="about-person-img"
-                            initial={{ opacity: 0, x: -50 }}
-                            animate={{ opacity: 1, x: 0 }}
-                            transition={{ duration: 0.8 }}
-                        />
+                    {/* Left Column: Playing Cards Fan Deck */}
+                    <div className="about-image-column animate-on-scroll">
+                        <div className="about-cards-fan-container">
+                            {/* Card 1: 10 ♠ */}
+                            <div 
+                                className={`card black ${selectedCards[1] ? 'selected' : ''}`}
+                                onClick={() => toggleCard(1)}
+                            >
+                                <section><span>10</span><span>♠</span></section>
+                                <section>♠</section>
+                            </div>
+
+                            {/* Card 2: 6 ♥ */}
+                            <div 
+                                className={`card red ${selectedCards[2] ? 'selected' : ''}`}
+                                onClick={() => toggleCard(2)}
+                            >
+                                <section><span>6</span><span>♥</span></section>
+                                <section>♥</section>
+                            </div>
+
+                            {/* Card 3: J ♣ */}
+                            <div 
+                                className={`card black ${selectedCards[3] ? 'selected' : ''}`}
+                                onClick={() => toggleCard(3)}
+                            >
+                                <section><span>J</span><span>♣</span></section>
+                                <section>♣</section>
+                            </div>
+
+                            {/* Card 4: 4 ♦ */}
+                            <div 
+                                className={`card red ${selectedCards[4] ? 'selected' : ''}`}
+                                onClick={() => toggleCard(4)}
+                            >
+                                <section><span>4</span><span>♦</span></section>
+                                <section>♦</section>
+                            </div>
+
+                            {/* Card 5: Magician Rajesh Card Frame */}
+                            <div 
+                                className={`card magician-card ${selectedCards[5] ? 'selected' : ''}`}
+                                onClick={() => toggleCard(5)}
+                            >
+                                <div className="magician-card-frame">
+                                    <span className="magician-card-badge">A♠</span>
+                                    <img src={magicianRajesh} alt="Magician Rajesh Kumar" className="magician-card-img" />
+                                </div>
+                            </div>
+                        </div>
                     </div>
 
                     {/* Right Column: Bio Content */}
-                    <motion.div 
-                        className="about-text-column"
-                        initial={{ opacity: 0, y: 30 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.8, delay: 0.2 }}
-                    >
+                    <div className="about-text-column animate-on-scroll">
                         <p className="about-cursive-tag">The Illusionist</p>
                         <h1 className="about-main-title">ABOUT</h1>
                         <h2 className="about-sub-heading">Magician Rajesh Kumar</h2>
@@ -91,15 +125,15 @@ const About = () => {
                             </p>
                         </div>
 
-                        <a href="#contact" className="about-contact-btn">CONTACT ME</a>
-                    </motion.div>
+                        <Link to="/contact" className="about-contact-btn">CONTACT ME</Link>
+                    </div>
                 </div>
             </section>
 
             {/* ===== RECENT EVENTS SECTION ===== */}
             <section className="recent-events-section">
                 <div className="recent-events-container">
-                    <div className="recent-events-header">
+                    <div className="recent-events-header animate-on-scroll">
                         <p className="recent-cursive-tag">Glimpse of excellence</p>
                         <h2 className="recent-events-title">RECENT EVENTS</h2>
                         <p className="recent-events-subtitle">Glimpse of recent events of Magician Rajesh Kumar</p>
@@ -107,7 +141,8 @@ const About = () => {
 
                     <div className="recent-events-grid">
                         {recentEvents.map(event => (
-                            <div key={event.id} className="event-card">
+                            <Link to="/event-view" style={{textDecoration: 'none'}}>
+                            <div key={event.id} className="event-card animate-on-scroll">
                                 <div className="event-card-img-wrap">
                                     <img src={event.image} alt={event.title} className="event-card-img" />
                                 </div>
@@ -116,17 +151,15 @@ const About = () => {
                                     <h3 className="event-title">{event.title}</h3>
                                 </div>
                             </div>
+                            </Link>
                         ))}
                     </div>
 
-                    <div className="recent-events-btn-wrap">
-                        <button className="view-more-events-btn">VIEW MORE EVENTS</button>
+                    <div className="recent-events-btn-wrap animate-on-scroll">
+                        <Link to="/events"> <button className="view-more-events-btn">VIEW MORE EVENTS</button></Link>
                     </div>
                 </div>
             </section>
-
-            {/* ===== FOOTER SECTION ===== */}
-            <FooterSection />
         </div>
     );
 };

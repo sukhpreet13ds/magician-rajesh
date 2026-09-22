@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import './style/style.css';
 import unforgetBg from '../assets/unforget-bg.jpg';
 import magicianLogo from '../assets/magician-logo.png';
@@ -36,9 +37,9 @@ const FooterSection = () => {
             {/* ===== UNFORGETTABLE / CONTACT SECTION ===== */}
             <section className="unforget-section" style={{ backgroundImage: `url(${unforgetBg})` }}>
                 <div className="unforget-overlay"></div>
-                <div className="unforget-top-line"></div>
+                <div className="unforget-top-line" style={{visibility: "hidden"}}></div>
 
-                <div className="unforget-content">
+                <div className="unforget-content animate-on-scroll">
                     <p className="unforget-cursive-tag">The Unforgettable</p>
                     <h2 className="unforget-heading">
                         AN EXPERIENCE FOR YOUR <span className="highlight-gold">GUESTS</span>
@@ -60,7 +61,7 @@ const FooterSection = () => {
                 </div>
 
                 {/* ===== OVERLAPPING CONTACT FORM ===== */}
-                <div className="contact-form-card">
+                <div id="enquire" className="contact-form-card animate-on-scroll">
                     <div className="form-notch-arrow"></div>
                     <form onSubmit={handleSubmit} className="contact-form">
                         <div className="form-row col-3">
@@ -83,50 +84,51 @@ const FooterSection = () => {
 
                         <div className="form-row col-3">
                             <div className="form-group">
-                                <input type="email" name="email" placeholder="YOUR EMAIL ADDRESS..." value={formData.email} onChange={handleChange} required />
+                                <input type="email" name="email" placeholder="E-MAIL" value={formData.email} onChange={handleChange} required />
                             </div>
                             <div className="form-group">
-                                <input type="tel" name="phone" placeholder="PHONE NUMBER..." value={formData.phone} onChange={handleChange} required />
+                                <input type="tel" name="phone" placeholder="PHONE" value={formData.phone} onChange={handleChange} required />
                             </div>
                             <div className="form-group">
-                                <input type="date" name="eventDate" placeholder="EVENT DATE" value={formData.eventDate} onChange={handleChange} required />
-                            </div>
-                        </div>
-
-                        <div className="form-row col-2">
-                            <div className="form-group">
-                                <input type="text" name="location" placeholder="WHERE ARE YOU CELEBRATING?" value={formData.location} onChange={handleChange} required />
-                            </div>
-                            <div className="form-group">
-                                <input type="text" name="guestCount" placeholder="APPROXIMATE NUMBER OF GUESTS*" value={formData.guestCount} onChange={handleChange} required />
+                                <input type="date" name="eventDate" value={formData.eventDate} onChange={handleChange} required />
                             </div>
                         </div>
 
-                        <div className="form-row col-1">
+                        <div className="form-row col-3">
                             <div className="form-group">
-                                <select name="knownFor" value={formData.knownFor} onChange={handleChange}>
-                                    <option value="">KNOWN FOR</option>
-                                    <option value="tv">TV Shows (India's Magic Star / IGT)</option>
-                                    <option value="recommendation">Friend / Colleague Recommendation</option>
-                                    <option value="social">Social Media</option>
+                                <input type="text" name="location" placeholder="LOCATION OF THE EVENT..." value={formData.location} onChange={handleChange} required />
+                            </div>
+                            <div className="form-group">
+                                <input type="number" name="guestCount" placeholder="NUMBER OF GUESTS..." value={formData.guestCount} onChange={handleChange} required />
+                            </div>
+                            <div className="form-group">
+                                <select name="knownFor" value={formData.knownFor} onChange={handleChange} required>
+                                    <option value="">HOW DID YOU BECOME AWARE OF ME?</option>
                                     <option value="google">Google Search</option>
+                                    <option value="social">Social Media</option>
+                                    <option value="recommendation">Recommendation / Word of Mouth</option>
+                                    <option value="tv">TV Show / Media</option>
+                                    <option value="other">Other</option>
                                 </select>
                             </div>
                         </div>
 
-                        <div className="form-checkboxes">
+                        <div className="form-consent-group">
                             <label className="checkbox-label">
                                 <input type="checkbox" name="privacyConsent" checked={formData.privacyConsent} onChange={handleChange} required />
-                                <span>I consent to the processing of the entered data and to the privacy policy.*</span>
+                                <span className="checkbox-custom"></span>
+                                I agree to the processing of my personal data for the purpose of handling my enquiry according to the privacy policy.
                             </label>
+
                             <label className="checkbox-label">
                                 <input type="checkbox" name="emailConsent" checked={formData.emailConsent} onChange={handleChange} />
-                                <span>To better serve you, we need to track the emails we send you. For this purpose, we ask for your consent to the declaration of consent.</span>
+                                <span className="checkbox-custom"></span>
+                                I would like to receive occasional updates about shows and news via email.
                             </label>
                         </div>
 
-                        <div className="form-submit-wrap">
-                            <button type="submit" className="form-submit-btn">ENQUIRE NOW</button>
+                        <div className="form-submit-row">
+                            <button type="submit" className="form-submit-btn">SEND ENQUIRY</button>
                         </div>
                     </form>
                 </div>
@@ -135,7 +137,7 @@ const FooterSection = () => {
             {/* ===== FOOTER SECTION ===== */}
             <footer className="footer-section">
                 <div className="footer-container">
-                    <div className="footer-grid">
+                    <div className="footer-grid animate-on-scroll">
                         {/* Column 1: Logo & Copyright */}
                         <div className="footer-col footer-brand-col">
                             <div className="footer-logo-wrap">
@@ -149,14 +151,16 @@ const FooterSection = () => {
                         {/* Column 2: Navigation Links */}
                         <div className="footer-col footer-links-col">
                             <ul className="footer-links-list">
-                                <li><a href="#home">HOME</a></li>
-                                <li><a href="#about">ABOUT</a></li>
-                                <li><a href="#services">SERVICES</a></li>
-                                <li><a href="#blogs">BLOGS</a></li>
+                                <li><Link to="/">HOME</Link></li>
+                                <li><Link to="/about">ABOUT</Link></li>
+                                <li><Link to="/services">SERVICES</Link></li>
+                                <li><Link to="/blogs">BLOGS</Link></li>
                             </ul>
                             <ul className="footer-links-list">
-                                <li><a href="#gallery">GALLERY</a></li>
-                                <li><a href="#contact">CONTACT US</a></li>
+                                <li><Link to="/gallery">GALLERY</Link></li>
+                                <li><Link to="/contact">CONTACT US</Link></li>
+                                <li><Link to="/privacy">PRIVACY POLICY</Link></li>
+                                <li><Link to="/terms">TERMS & CONDITIONS</Link></li>
                             </ul>
                         </div>
 
@@ -183,7 +187,7 @@ const FooterSection = () => {
                         </div>
                     </div>
 
-                    <div className="footer-bottom-bar">
+                    <div className="footer-bottom-bar animate-on-scroll">
                         <div className="footer-social-row">
                             <a href="https://youtube.com" target="_blank" rel="noreferrer" className="footer-social-icon" aria-label="YouTube">
                                 <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor">

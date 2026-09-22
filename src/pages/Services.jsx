@@ -41,7 +41,7 @@ const Services = () => {
                 <div className="services-page-overlay"></div>
 
                 <div className="services-page-container">
-                    <div className="services-page-header">
+                    <div className="services-page-header animate-on-scroll">
                         <p className="services-cursive-tag">World Class Acts</p>
                         <h1 className="services-page-title">SERVICES</h1>
                         <h2 className="services-page-subtitle">Magician Rajesh Kumar</h2>
@@ -55,7 +55,7 @@ const Services = () => {
                         {servicesList.map((service, index) => (
                             <motion.div 
                                 key={service.id} 
-                                className="service-grid-card-wrap"
+                                className="service-grid-card-wrap animate-on-scroll"
                                 initial={{ opacity: 0, y: 30 }}
                                 animate={{ opacity: 1, y: 0 }}
                                 transition={{ duration: 0.5, delay: index * 0.05 }}
@@ -70,7 +70,7 @@ const Services = () => {
                         ))}
                     </div>
 
-                    <div className="services-page-btn-wrap">
+                    <div className="services-page-btn-wrap animate-on-scroll">
                         <button className="view-more-services-btn">VIEW MORE SERVICES</button>
                     </div>
                 </div>

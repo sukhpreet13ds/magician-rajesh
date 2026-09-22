@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './style/style.css';
 import backWall from '../assets/back-wall.jpg';
-import FooterSection from '../components/FooterSection';
-import { motion, AnimatePresence } from 'framer-motion';
+import { AnimatePresence, motion } from 'framer-motion';
+import { FaChevronLeft, FaChevronRight } from 'react-icons/fa';
 
 import eventD1 from '../assets/event-d1.png';
 import eventD2 from '../assets/event-d2.png';
@@ -33,6 +33,39 @@ const EventView = () => {
         { id: 11, image: eventD11, title: "Stage Finale Magic" }
     ];
 
+    const handlePrevImage = (e) => {
+        if (e) e.stopPropagation();
+        if (!selectedImage || eventPhotos.length === 0) return;
+        const currentIndex = eventPhotos.findIndex(p => p.id === selectedImage.id);
+        const prevIndex = (currentIndex - 1 + eventPhotos.length) % eventPhotos.length;
+        setSelectedImage(eventPhotos[prevIndex]);
+    };
+
+    const handleNextImage = (e) => {
+        if (e) e.stopPropagation();
+        if (!selectedImage || eventPhotos.length === 0) return;
+        const currentIndex = eventPhotos.findIndex(p => p.id === selectedImage.id);
+        const nextIndex = (currentIndex + 1) % eventPhotos.length;
+        setSelectedImage(eventPhotos[nextIndex]);
+    };
+
+    // Keyboard navigation
+    useEffect(() => {
+        const handleKeyDown = (e) => {
+            if (!selectedImage) return;
+            if (e.key === 'ArrowLeft') {
+                handlePrevImage();
+            } else if (e.key === 'ArrowRight') {
+                handleNextImage();
+            } else if (e.key === 'Escape') {
+                setSelectedImage(null);
+            }
+        };
+
+        window.addEventListener('keydown', handleKeyDown);
+        return () => window.removeEventListener('keydown', handleKeyDown);
+    }, [selectedImage]);
+
     return (
         <div className="event-view-wrapper">
             {/* ===== EVENT VIEW HERO SECTION ===== */}
@@ -40,7 +73,7 @@ const EventView = () => {
                 <div className="event-view-overlay"></div>
 
                 <div className="event-view-container">
-                    <div className="event-view-header">
+                    <div className="event-view-header animate-on-scroll">
                         <p className="event-view-cursive-tag">Exclusive Performance Highlights</p>
                         <h1 className="event-view-main-title">RAJESH KUMAR</h1>
                         <h2 className="event-view-sub-title">LIVE @ MUMBAI FOR CORPORATE</h2>
@@ -48,13 +81,10 @@ const EventView = () => {
 
                     {/* Photos Grid Collage */}
                     <div className="event-view-grid">
-                        {eventPhotos.map((photo, index) => (
-                            <motion.div 
+                        {eventPhotos.map((photo) => (
+                            <div 
                                 key={photo.id}
-                                className="event-view-card"
-                                initial={{ opacity: 0, scale: 0.95 }}
-                                animate={{ opacity: 1, scale: 1 }}
-                                transition={{ duration: 0.4, delay: index * 0.04 }}
+                                className="event-view-card animate-on-scroll"
                                 onClick={() => setSelectedImage(photo)}
                             >
                                 <div className="event-view-img-wrap">
@@ -70,7 +100,7 @@ const EventView = () => {
                                         </span>
                                     </div>
                                 </div>
-                            </motion.div>
+                            </div>
                         ))}
                     </div>
                 </div>
@@ -88,15 +118,32 @@ const EventView = () => {
                     >
                         <div className="event-view-modal-content" onClick={e => e.stopPropagation()}>
                             <button className="event-view-modal-close" onClick={() => setSelectedImage(null)}>×</button>
+
+                            {eventPhotos.length > 1 && (
+                                <>
+                                    <button 
+                                        className="event-view-modal-nav prev-btn" 
+                                        onClick={handlePrevImage}
+                                        aria-label="Previous image"
+                                    >
+                                        <FaChevronLeft />
+                                    </button>
+                                    <button 
+                                        className="event-view-modal-nav next-btn" 
+                                        onClick={handleNextImage}
+                                        aria-label="Next image"
+                                    >
+                                        <FaChevronRight />
+                                    </button>
+                                </>
+                            )}
+
                             <img src={selectedImage.image} alt={selectedImage.title} className="event-view-modal-img" />
                             <p className="event-view-modal-caption">{selectedImage.title}</p>
                         </div>
                     </motion.div>
                 )}
             </AnimatePresence>
-
-            {/* ===== FOOTER SECTION ===== */}
-            <FooterSection />
         </div>
     );
 };

@@ -13,13 +13,25 @@ import experienceBg from '../assets/experience-bg.jpg';
 import experienceRight from '../assets/experience-right.jpg';
 import BrandsMarquee from '../components/BrandsMarquee';
 import TestimonialsMarquee from '../components/TestimonialsMarquee';
-import FooterSection from '../components/FooterSection';
 import { TextAnimate } from '../components/magicui/text-animate';
+import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 
 const Home = () => {
+    React.useEffect(() => {
+        if (window.instgrm) {
+            window.instgrm.Embeds.process();
+        } else {
+            const script = document.createElement('script');
+            script.src = '//www.instagram.com/embed.js';
+            script.async = true;
+            document.body.appendChild(script);
+        }
+    }, []);
+
     return(
         <div className="home-container">
+            {/* HERO SECTION - NO animate-on-scroll as requested */}
             <section className="hero-section" style={{ backgroundImage: `url(${backWall})` }}>
                 <div className="hero-content">
                     <div className="hero-text-container">
@@ -50,6 +62,7 @@ const Home = () => {
                                 THEY WILL NEVER FORGET.
                             </TextAnimate>
                         </h2>
+                        <a href="#enquire">
                         <motion.button 
                             className="hero-enquire-btn"
                             initial={{ opacity: 0 }}
@@ -58,7 +71,8 @@ const Home = () => {
                         >
                             ENQUIRE FOR YOUR EVENT
                         </motion.button>
-                    </div>
+                        </a>
+                        </div>
                     <div className="hero-image-container">
                         <img src={heroBg} alt="Hero Background" className="hero-bg-img" />
                         <motion.img 
@@ -77,30 +91,27 @@ const Home = () => {
 
             {/* ===== PERFORMER SECTION ===== */}
             <section className="performer-section">
-                {/* Person standing image placed on the far left */}
-                <div className="performer-person-wrap">
+                <div className="performer-person-wrap animate-on-scroll">
                     <img src={rajeshSide} alt="Rajesh Kumar" className="performer-person-img" />
                 </div>
 
                 <div className="performer-inner">
-                    {/* Header: Title & Subheading */}
-                    <div className="performer-header">
+                    <div className="performer-header animate-on-scroll">
                         <p className="performer-italic-tag">The Performer</p>
                         <h2 className="performer-heading">MAGIC BUILT AROUND YOUR AUDIENCE.</h2>
                     </div>
 
-                    {/* Main content grid: Center Stage Image + Right Text */}
                     <div className="performer-content-grid">
-                        <div className="performer-stage-column">
+                        <div className="performer-stage-column animate-on-scroll">
                             <div className="performer-stage-wrap">
                                 <img src={igtStage} alt="India's Got Talent Stage" className="performer-stage-img" />
                             </div>
                             <div className="performer-btn-row">
-                                <button className="performer-book-btn">BOOK RAJESH</button>
+                               <a href='#enquire'><button className="performer-book-btn">BOOK RAJESH</button></a> 
                             </div>
                         </div>
 
-                        <div className="performer-text">
+                        <div className="performer-text animate-on-scroll">
                             <p className="performer-bio">
                                 From a breakthrough on India's Magic Star to appearances on India's Got Talent and Hunarbaaz: Desh Ki Shaan, Rajesh Kumar has spent over sixteen years turning audiences into part of the story.
                             </p>
@@ -111,20 +122,70 @@ const Home = () => {
                                 <em>"Not just a show—an experience your guests will keep talking about."</em>
                             </p>
                         </div>
+
+                        {/* Right Side Corner: Instagram Latest Reel Embed */}
+                        <div className="performer-reel-column animate-on-scroll">
+                            <div className="performer-reel-container">
+                                <span className="reel-badge-tag">LATEST REEL</span>
+                                <blockquote 
+                                    className="instagram-media" 
+                                    data-instgrm-permalink="https://www.instagram.com/reel/DdY2zS0yysn/?utm_source=ig_embed&amp;utm_campaign=loading" 
+                                    data-instgrm-version="14"
+                                    style={{
+                                        background: '#FFF',
+                                        border: '0',
+                                        borderRadius: '8px',
+                                        boxShadow: '0 4px 15px rgba(0,0,0,0.15)',
+                                        margin: '1px auto',
+                                        maxWidth: '320px',
+                                        minWidth: '260px',
+                                        padding: '0',
+                                        width: '100%'
+                                    }}
+                                >
+                                    <div style={{ padding: '16px' }}>
+                                        <a 
+                                            href="https://www.instagram.com/reel/DdY2zS0yysn/?utm_source=ig_embed&amp;utm_campaign=loading" 
+                                            style={{ background: '#FFFFFF', lineHeight: '0', padding: '0', textAlign: 'center', textDecoration: 'none', width: '100%' }} 
+                                            target="_blank" 
+                                            rel="noreferrer"
+                                        >
+                                            <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
+                                                <div style={{ backgroundColor: '#F4F4F4', borderRadius: '50%', flexGrow: 0, height: '40px', marginRight: '14px', width: '40px' }}></div>
+                                                <div style={{ display: 'flex', flexDirection: 'column', flexGrow: 1, justifyContent: 'center' }}>
+                                                    <div style={{ backgroundColor: '#F4F4F4', borderRadius: '4px', flexGrow: 0, height: '14px', marginBottom: '6px', width: '100px' }}></div>
+                                                    <div style={{ backgroundColor: '#F4F4F4', borderRadius: '4px', flexGrow: 0, height: '14px', width: '60px' }}></div>
+                                                </div>
+                                            </div>
+                                            <div style={{ padding: '19% 0' }}></div>
+                                            <div style={{ paddingTop: '8px' }}>
+                                                <div style={{ color: '#3897f0', fontFamily: 'Arial,sans-serif', fontSize: '14px', fontStyle: 'normal', fontWeight: '550', lineHeight: '18px' }}>
+                                                    View this post on Instagram
+                                                </div>
+                                            </div>
+                                        </a>
+                                        <p style={{ color: '#c9c8cd', fontFamily: 'Arial,sans-serif', fontSize: '14px', lineHeight: '17px', marginBottom: 0, marginTop: '8px', overflow: 'hidden', padding: '8px 0 7px', textAlign: 'center', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+                                            <a href="https://www.instagram.com/reel/DdY2zS0yysn/?utm_source=ig_embed&amp;utm_campaign=loading" style={{ color: '#c9c8cd', fontFamily: 'Arial,sans-serif', fontSize: '14px', fontStyle: 'normal', fontWeight: 'normal', lineHeight: '17px', textDecoration: 'none' }} target="_blank" rel="noreferrer">
+                                                A post shared by Rajesh Kumar (@rajeshkumarmagic)
+                                            </a>
+                                        </p>
+                                    </div>
+                                </blockquote>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </section>
 
             {/* ===== SERVICES SECTION ===== */}
             <section className="services-section">
-                <div className="services-green-bg">
+                <div className="services-green-bg animate-on-scroll">
                     <p className="services-cursive-tag">Suitable for</p>
                     <h2 className="services-heading">EXTRAÖRDINARY EVENTS</h2>
                 </div>
 
                 <div className="services-cards-container">
-                    {/* Card 1 */}
-                    <div className="services-card card-gold">
+                    <div className="services-card card-gold animate-on-scroll">
                         <div className="services-card-dot"></div>
                         <div className="services-card-img-wrap">
                             <img src={magicService1} alt="Corporate Magic" className="services-card-img" />
@@ -134,12 +195,11 @@ const Home = () => {
                             <p className="services-card-desc">
                                 A 30–45 minute interactive show for conferences, dealer meets, team events and award nights.
                             </p>
-                            <a href="#enquire" className="services-card-link">READ MORE</a>
+                            <Link to='/events' className="services-card-link">READ MORE</Link>
                         </div>
                     </div>
 
-                    {/* Card 2 */}
-                    <div className="services-card card-light">
+                    <div className="services-card card-light animate-on-scroll">
                         <div className="services-card-dot"></div>
                         <div className="services-card-img-wrap">
                             <img src={magicService2} alt="Product Launch Illusions" className="services-card-img" />
@@ -149,12 +209,11 @@ const Home = () => {
                             <p className="services-card-desc">
                                 Reveal a product, bring your CEO on stage, or make a brand message appear in a truly memorable way.
                             </p>
-                            <a href="#enquire" className="services-card-link">READ MORE</a>
+                            <Link to='/events' className="services-card-link">READ MORE</Link>
                         </div>
                     </div>
 
-                    {/* Card 3 */}
-                    <div className="services-card card-dark">
+                    <div className="services-card card-dark animate-on-scroll">
                         <div className="services-card-dot"></div>
                         <div className="services-card-img-wrap">
                             <img src={magicService3} alt="Close-Up & iPad Magic" className="services-card-img" />
@@ -164,31 +223,30 @@ const Home = () => {
                             <p className="services-card-desc">
                                 Personal, high-impact magic for cocktail hours, VIP guests, exhibitions and intimate gatherings.
                             </p>
-                            <a href="#enquire" className="services-card-link">READ MORE</a>
+                            <Link to='/events' className="services-card-link">READ MORE</Link>
                         </div>
                     </div>
                 </div>
 
-                <div className="services-bottom-btn-wrap">
-                    <button className="services-view-all-btn">VIEW ALL SERVICES</button>
+                <div className="services-bottom-btn-wrap animate-on-scroll">
+                    <Link to="/services"><button className="services-view-all-btn">VIEW ALL SERVICES</button></Link>
                 </div>
 
-                <div className="services-vertical-line"></div>
+                <div className="services-vertical-line" style={{visibility: "hidden"}}></div>
             </section>
 
             {/* ===== MORE THAN ENTERTAINMENT SECTION ===== */}
             <section className="more-section" style={{ backgroundImage: `url(${moreBg})` }}>
                 <div className="more-overlay"></div>
-                <div className="more-top-line"></div>
+                <div className="more-top-line" style={{visibility: "hidden"}}></div>
 
-                <div className="more-header">
+                <div className="more-header animate-on-scroll">
                     <p className="more-cursive-tag">More than</p>
                     <h2 className="more-heading">ENTERTAINMENT</h2>
                 </div>
 
                 <div className="more-cards-container">
-                    {/* Card 1 */}
-                    <div className="more-card">
+                    <div className="more-card animate-on-scroll">
                         <div className="more-card-dot"></div>
                         <h3 className="more-card-title">PSYCHOLOGICAL<br />EFFECT</h3>
                         <p className="more-card-desc">
@@ -196,8 +254,7 @@ const Home = () => {
                         </p>
                     </div>
 
-                    {/* Card 2 */}
-                    <div className="more-card card-center">
+                    <div className="more-card card-center animate-on-scroll">
                         <div className="more-card-dot"></div>
                         <h3 className="more-card-title">GENUINE INTERACTION<br />WITH A WOW FACTOR</h3>
                         <p className="more-card-desc">
@@ -205,8 +262,7 @@ const Home = () => {
                         </p>
                     </div>
 
-                    {/* Card 3 */}
-                    <div className="more-card">
+                    <div className="more-card animate-on-scroll">
                         <div className="more-card-dot"></div>
                         <h3 className="more-card-title">ELEGANT<br />ATMOSPHERE</h3>
                         <p className="more-card-desc">
@@ -224,16 +280,16 @@ const Home = () => {
                 <div className="experience-top-line"></div>
 
                 <div className="experience-container">
-                    <div className="experience-left-content">
+                    <div className="experience-left-content animate-on-scroll">
                         <p className="experience-cursive-tag">The person behind</p>
                         <h2 className="experience-heading">THE EXPERIENCE</h2>
                         <p className="experience-text">
                             Magician Rajesh Kumar is a Mumbai based illusionist and magician who have changed the way we have been looking to magic. Magician Rajesh Kumar has performed for several tv channels national and regional he first came into limelight with his appearance on India's magic star on star one in which he was selected in India's top 10 magician from all over India, after this magician illusionist Rajesh Kumar travelled all across India performing his magic and mentalism shows.
                         </p>
-                        <button className="experience-read-btn">READ MORE</button>
+                        <Link to="/about"><button className="experience-read-btn">READ MORE</button></Link>
                     </div>
 
-                    <div className="experience-right-wrap">
+                    <div className="experience-right-wrap animate-on-scroll">
                         <img src={experienceRight} alt="Magician Rajesh Kumar" className="experience-right-img" />
                     </div>
                 </div>
@@ -242,13 +298,14 @@ const Home = () => {
             </section>
 
             {/* ===== BRANDS MARQUEE SECTION ===== */}
-            <BrandsMarquee />
+            <div className="animate-on-scroll">
+                <BrandsMarquee />
+            </div>
 
             {/* ===== TESTIMONIALS MARQUEE SECTION ===== */}
-            <TestimonialsMarquee />
-
-            {/* ===== UNFORGETTABLE & FOOTER SECTION ===== */}
-            <FooterSection />
+            <div className="animate-on-scroll">
+                <TestimonialsMarquee />
+            </div>
         </div>
     )
 }

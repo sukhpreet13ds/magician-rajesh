@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './style/style.css';
 import backWall from '../assets/back-wall.jpg';
 import FooterSection from '../components/FooterSection';
 import { motion, AnimatePresence } from 'framer-motion';
+import { FaChevronLeft, FaChevronRight } from 'react-icons/fa';
 
 import inService1 from '../assets/in-service1.png';
 import inService2 from '../assets/in-service2.png';
@@ -118,6 +119,41 @@ const Gallery = () => {
         ? galleryItems 
         : galleryItems.filter(item => item.category === activeFilter);
 
+    const imageItems = filteredItems.filter(item => item.type === 'image');
+
+    const handlePrevMedia = (e) => {
+        if (e) e.stopPropagation();
+        if (!modalMedia || imageItems.length === 0) return;
+        const currentIndex = imageItems.findIndex(item => item.id === modalMedia.id);
+        const prevIndex = (currentIndex - 1 + imageItems.length) % imageItems.length;
+        setModalMedia(imageItems[prevIndex]);
+    };
+
+    const handleNextMedia = (e) => {
+        if (e) e.stopPropagation();
+        if (!modalMedia || imageItems.length === 0) return;
+        const currentIndex = imageItems.findIndex(item => item.id === modalMedia.id);
+        const nextIndex = (currentIndex + 1) % imageItems.length;
+        setModalMedia(imageItems[nextIndex]);
+    };
+
+    // Keyboard navigation
+    useEffect(() => {
+        const handleKeyDown = (e) => {
+            if (!modalMedia || modalMedia.type !== 'image') return;
+            if (e.key === 'ArrowLeft') {
+                handlePrevMedia();
+            } else if (e.key === 'ArrowRight') {
+                handleNextMedia();
+            } else if (e.key === 'Escape') {
+                setModalMedia(null);
+            }
+        };
+
+        window.addEventListener('keydown', handleKeyDown);
+        return () => window.removeEventListener('keydown', handleKeyDown);
+    }, [modalMedia, filteredItems]);
+
     return (
         <div className="gallery-page-wrapper">
             {/* ===== GALLERY HERO SECTION ===== */}
@@ -125,7 +161,7 @@ const Gallery = () => {
                 <div className="gallery-page-overlay"></div>
 
                 <div className="gallery-page-container">
-                    <div className="gallery-page-header">
+                    <div className="gallery-page-header animate-on-scroll">
                         <p className="gallery-cursive-tag">Visual Spectacle</p>
                         <h1 className="gallery-page-title">GALLERY</h1>
                         <h2 className="gallery-page-subtitle">Magician Rajesh Kumar</h2>
@@ -135,7 +171,7 @@ const Gallery = () => {
                     </div>
 
                     {/* Filter Buttons */}
-                    <div className="gallery-filter-bar">
+                    <div className="gallery-filter-bar animate-on-scroll">
                         <button 
                             className={`gallery-filter-btn ${activeFilter === 'all' ? 'active' : ''}`}
                             onClick={() => setActiveFilter('all')}
@@ -179,7 +215,7 @@ const Gallery = () => {
                                     animate={{ opacity: 1, scale: 1 }}
                                     exit={{ opacity: 0, scale: 0.9 }}
                                     transition={{ duration: 0.4 }}
-                                    className={`gallery-card ${item.sizeClass} ${item.type === 'video' ? 'video-card' : ''}`}
+                                    className={`gallery-card animate-on-scroll ${item.sizeClass} ${item.type === 'video' ? 'video-card' : ''}`}
                                     onClick={() => setModalMedia(item)}
                                 >
                                     {item.type === 'video' ? (
@@ -231,6 +267,26 @@ const Gallery = () => {
                     >
                         <div className="gallery-modal-content" onClick={e => e.stopPropagation()}>
                             <button className="gallery-modal-close" onClick={() => setModalMedia(null)}>×</button>
+                            
+                            {imageItems.length > 1 && (
+                                <>
+                                    <button 
+                                        className="gallery-modal-nav prev-btn" 
+                                        onClick={handlePrevMedia}
+                                        aria-label="Previous image"
+                                    >
+                                        <FaChevronLeft />
+                                    </button>
+                                    <button 
+                                        className="gallery-modal-nav next-btn" 
+                                        onClick={handleNextMedia}
+                                        aria-label="Next image"
+                                    >
+                                        <FaChevronRight />
+                                    </button>
+                                </>
+                            )}
+
                             <img src={modalMedia.src} alt={modalMedia.title} className="gallery-modal-img" />
                             <p className="gallery-modal-caption">{modalMedia.title}</p>
                         </div>

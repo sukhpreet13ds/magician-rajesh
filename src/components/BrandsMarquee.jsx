@@ -49,7 +49,7 @@ const BrandsMarquee = () => {
                 </div>
             </div>
 
-            <div className="brands-bottom-line"></div>
+            <div className="brands-bottom-line" style={{visibility: "hidden"}}></div>
         </section>
     );
 };

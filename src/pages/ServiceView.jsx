@@ -3,8 +3,6 @@ import './style/style.css';
 import backWall from '../assets/back-wall.jpg';
 import inService1 from '../assets/in-service1.png';
 import inService2 from '../assets/in-service2.png';
-import FooterSection from '../components/FooterSection';
-import { motion } from 'framer-motion';
 
 const ServiceView = () => {
     return (
@@ -15,12 +13,7 @@ const ServiceView = () => {
 
                 <div className="service-view-container">
                     {/* Top Row: Image Left, Text Right */}
-                    <motion.div 
-                        className="service-view-row"
-                        initial={{ opacity: 0, y: 30 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.7 }}
-                    >
+                    <div className="service-view-row animate-on-scroll">
                         <div className="service-view-img-col">
                             <div className="service-view-img-frame">
                                 <img src={inService1} alt="Corporate Magician India" className="service-view-img" />
@@ -43,15 +36,10 @@ const ServiceView = () => {
                                 </p>
                             </div>
                         </div>
-                    </motion.div>
+                    </div>
 
                     {/* Bottom Row: Text Left, Image Right */}
-                    <motion.div 
-                        className="service-view-row reverse-row"
-                        initial={{ opacity: 0, y: 30 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.7, delay: 0.2 }}
-                    >
+                    <div className="service-view-row reverse-row animate-on-scroll">
                         <div className="service-view-text-col">
                             <h2 className="service-view-section-title">HIRE A CORPORATE MAGICIAN IN INDIA</h2>
 
@@ -70,15 +58,10 @@ const ServiceView = () => {
                                 <img src={inService2} alt="Hire A Corporate Magician In India" className="service-view-img" />
                             </div>
                         </div>
-                    </motion.div>
+                    </div>
 
                     {/* Contact Callout Banner */}
-                    <motion.div 
-                        className="service-view-contact-box"
-                        initial={{ opacity: 0, scale: 0.95 }}
-                        animate={{ opacity: 1, scale: 1 }}
-                        transition={{ duration: 0.6, delay: 0.4 }}
-                    >
+                    <div className="service-view-contact-box animate-on-scroll">
                         <p className="contact-box-label">For more information, call us at</p>
                         <div className="contact-box-phones">
                             <a href="tel:+919372074683">+91-9372074683</a>, 
@@ -88,12 +71,9 @@ const ServiceView = () => {
                         <p className="contact-box-label email-label">or drop an email at</p>
                         <a href="mailto:rajesh.kumar67@yahoo.in" className="contact-box-email">rajesh.kumar67@yahoo.in</a>
                         <p className="contact-box-footer-tag">Book Magician Kumar for your corporate event now!</p>
-                    </motion.div>
+                    </div>
                 </div>
             </section>
-
-            {/* ===== FOOTER SECTION ===== */}
-            <FooterSection />
         </div>
     );
 };

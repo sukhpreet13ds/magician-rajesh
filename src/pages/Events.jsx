@@ -1,8 +1,6 @@
 import React from 'react';
 import './style/style.css';
 import backWall from '../assets/back-wall.jpg';
-import FooterSection from '../components/FooterSection';
-import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 
 import event1 from '../assets/event1.png';
@@ -93,7 +91,7 @@ const Events = () => {
                 <div className="events-page-overlay"></div>
 
                 <div className="events-page-container">
-                    <div className="events-page-header">
+                    <div className="events-page-header animate-on-scroll">
                         <p className="events-cursive-tag">Moments of Magic</p>
                         <h1 className="events-page-title">EVENTS</h1>
                         <h2 className="events-page-subtitle">Magician Rajesh Kumar</h2>
@@ -104,14 +102,8 @@ const Events = () => {
 
                     {/* Events Grid Layout */}
                     <div className="events-page-grid">
-                        {eventsList.map((eventItem, index) => (
-                            <motion.div 
-                                key={eventItem.id} 
-                                className="events-grid-card-wrap"
-                                initial={{ opacity: 0, y: 30 }}
-                                animate={{ opacity: 1, y: 0 }}
-                                transition={{ duration: 0.5, delay: index * 0.04 }}
-                            >
+                        {eventsList.map((eventItem) => (
+                            <div key={eventItem.id} className="events-grid-card-wrap animate-on-scroll">
                                 <Link to={`/event-view`} className="events-grid-card">
                                     <div className="events-grid-img-wrap">
                                         <img src={eventItem.image} alt={eventItem.title} className="events-grid-img" />
@@ -121,14 +113,11 @@ const Events = () => {
                                         <h3 className="events-grid-card-title">{eventItem.title}</h3>
                                     </div>
                                 </Link>
-                            </motion.div>
+                            </div>
                         ))}
                     </div>
                 </div>
             </section>
-
-            {/* ===== FOOTER SECTION ===== */}
-            <FooterSection />
         </div>
     );
 };
